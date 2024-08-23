@@ -9,7 +9,8 @@ Blockchain::Blockchain(){
     difficulty = 2;
 }
 
-void Blockchain::addWallet(string address, double balance){
+//TODO: Make repeat addresses prompt reenter in main
+bool Blockchain::addWallet(string address, double balance){
     bool unused = true;
     for (Wallet wallet : wallets){
         if (address == wallet.getAddress())
@@ -19,10 +20,14 @@ void Blockchain::addWallet(string address, double balance){
         wallets.emplace_back(address,balance);
     else
         cout << "Cannot create wallet. Address already in use" << endl;
+
+    return unused;
 }
 
-void Blockchain::addNode(string address){
+bool Blockchain::addNode(string address){
+    bool unused = true;
     nodes.emplace_back(new Node(address));
+    return unused;
 }
 
 void Blockchain::addTransaction(string sender, string recipient, double amount){

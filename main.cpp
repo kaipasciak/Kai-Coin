@@ -7,6 +7,7 @@ int main() {
     // Initialize blockchain object
     Blockchain Blockchain;
 
+    //TODO: Make repeat addresses prompt reenter
     // Add wallets to network
     int numWallets;
     cout << "Enter the number of wallets: " << endl;
@@ -25,8 +26,19 @@ int main() {
     // Initialize wallet addresses and balances
     for (int i = 1; i <= numWallets; i++){
         string address;
-        cout << "Create address for wallet " << i << ": " << endl;
-        cin >> address;
+        bool unused = true;
+        while(unused == true) {
+            cout << "Create address for wallet " << i << ": " << endl;
+            cin >> address;
+            unused = false;
+            for (Wallet wallet : Blockchain.wallets){
+                string wAddress = wallet.getAddress();
+                if (address == wAddress){
+                    unused = true;
+                    cout << "Address already in use" << endl;
+                }
+            }
+        }
 
         while (true) {
             double balance;

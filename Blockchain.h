@@ -31,9 +31,9 @@ public:
 
     Blockchain();
 
-    void addNode(string address);
+    bool addNode(string address);
 
-    void addWallet(string address, double balance);
+    bool addWallet(string address, double balance);
 
     void addTransaction(string sender, string recipient, double amount);
 
