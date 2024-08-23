@@ -44,18 +44,13 @@ int Node::getNonce(){
 }
 
 bool Node::mineBlock(int difficulty){
-    cout << "Node: mineblock. Difficulty: " << difficulty << endl;
-
+    cout << "Mining block. Difficulty: " << difficulty << endl;
 
     string blockString = currentBlock.toString();
-    cout << "Node: blockString = " << blockString << endl;
 
     string blockHeader = "1 to " + address + blockString;
-    cout << "Node: blockHeader = " << blockHeader << endl;
-
 
     string thisHash = sha256(blockHeader + to_string(nonce));
-    cout << "Node: thisHash = " << thisHash << endl;
 
     hash = thisHash;
     int zeroes = 0;
