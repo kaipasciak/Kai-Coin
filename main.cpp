@@ -72,8 +72,20 @@ int main() {
     vector<Node*> nodes;
     for (int i = 1; i <= numNodes; i++){
         string address;
-        cout << "Enter an address for node " << i << endl;
-        cin >> address;
+        bool unused = true;
+        while(unused == true) {
+            cout << "Create address for node " << i << ": " << endl;
+            cin >> address;
+            unused = false;
+            for (Node *node : Blockchain.nodes){
+                string nAddress = node->getAddress();
+                if (address == nAddress){
+                    unused = true;
+                    cout << "Address already in use" << endl;
+                }
+            }
+        }
+
         Blockchain.addNode(address);
     }
 
