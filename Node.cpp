@@ -3,11 +3,13 @@
 //
 
 #include "Node.h"
+#include <iostream>
 
 Node::Node(string address){
     balance = 0;
     chainLength = 0;
     nonce = 0;
+    hash = "";
     this->address = address;
 }
 
@@ -42,10 +44,19 @@ int Node::getNonce(){
 }
 
 bool Node::mineBlock(int difficulty){
+    cout << "Node: mineblock. Difficulty: " << difficulty << endl;
+
+
     string blockString = currentBlock.toString();
+    cout << "Node: blockString = " << blockString << endl;
+
     string blockHeader = "1 to " + address + blockString;
+    cout << "Node: blockHeader = " << blockHeader << endl;
+
 
     string thisHash = sha256(blockHeader + to_string(nonce));
+    cout << "Node: thisHash = " << thisHash << endl;
+
     hash = thisHash;
     int zeroes = 0;
     for (char ch : thisHash){

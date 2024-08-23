@@ -10,20 +10,53 @@ int main() {
     // Add wallets to network
     int numWallets;
     cout << "Enter the number of wallets: " << endl;
-    cin >> numWallets;
+    while (true) {
+        cin >> numWallets;
+        // Validate input
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Please enter an integer: " << endl;
+        }
+        else
+            break;
+    }
+
+    // Initialize wallet addresses and balances
     for (int i = 1; i <= numWallets; i++){
         string address;
         cout << "Create address for wallet " << i << ": " << endl;
         cin >> address;
-        double balance;
-        cout << "Enter starting balance for wallet " << i << ": " << endl;
-        cin >> balance;
-        Blockchain.addWallet(address, balance);
+
+        while (true) {
+            double balance;
+            // Validate balance input
+            cout << "Enter starting balance for wallet " << i << ": " << endl;
+            cin >> balance;
+            if (cin.fail()) {
+                cout << "Please enter numerical value for starting balance" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            else {
+                Blockchain.addWallet(address, balance);
+                break;
+            }
+        }
     }
     // Add nodes to network
     int numNodes;
-    cout << "Enter the number of nodes: " << endl;
-    cin >> numNodes;
+    while (true) {
+        cout << "Enter the number of nodes: " << endl;
+        cin >> numNodes;
+        if (cin.fail()) {
+            cout << "Please enter integer value for number of nodes" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else
+            break;
+    }
     vector<Node*> nodes;
     for (int i = 1; i <= numNodes; i++){
         string address;
@@ -38,16 +71,39 @@ int main() {
             string sender;
             cout << "Enter sender address: " << endl;
             cin >> sender;
+
             double amount;
-            cout << "Enter amount: " << endl;
-            cin >> amount;
+            while (true) {
+                cout << "Enter amount: " << endl;
+                cin >> amount;
+                if (cin.fail()){
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Please enter numerical value for transaction amount" << endl;
+                }
+                else
+                    break;
+            }
+
             string recipient;
             cout << "Enter recipient address: " << endl;
             cin >> recipient;
             Blockchain.addTransaction(sender, recipient, amount);
             int more;
             cout << "Enter another? (1: Yes, 2: No) " << endl;
-            cin >> more;
+            while (true) {
+                cin >> more;
+                if (cin.fail()){
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Please enter 1 or 2" << endl;
+                }
+                else if (more > 2 or more < 1){
+                    cout << "Please enter 1 or 2" << endl;
+                }
+                else
+                    break;
+            }
             if (more != 1)
                 break;
         }

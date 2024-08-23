@@ -66,6 +66,7 @@ bool Blockchain::runNodes(){
 
     for (Node *node : nodes){
         node->checkLength(chain, nextBlock);
+
         if (node->mineBlock(difficulty)) {
             string hash = node->getHash();
             cout << "Node " << node->getAddress() << " mined the block. Hash: " << hash << " Nonce: " << node->getNonce() << endl;
