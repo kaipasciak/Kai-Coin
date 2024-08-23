@@ -43,16 +43,16 @@ Block Blockchain::getLastBlock(){
 
 void Blockchain::setNextBlock(){
 
-    if (mempool.size() >= 3) {
-        vector<Transaction> newBlockTransactions = {};
-        for (int i = 0; i < NUM_BLOCK_TRANSACTIONS; i++) {
+    vector<Transaction> newBlockTransactions = {};
+    for (int i = 0; i < NUM_BLOCK_TRANSACTIONS; i++) {
+        if (mempool.size() != 0) {
             newBlockTransactions.push_back(mempool.front());
             mempool.erase(mempool.begin());
         }
-        string lastBlockHash = getLastBlock().getPreviousHash();
-        Block newBlock = Block(lastBlockHash, newBlockTransactions);
-        nextBlock = newBlock;
     }
+    string lastBlockHash = getLastBlock().getPreviousHash();
+    Block newBlock = Block(lastBlockHash, newBlockTransactions);
+    nextBlock = newBlock;
 
 }
 
