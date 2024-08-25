@@ -7,8 +7,6 @@ int main() {
     // Initialize blockchain object
     Blockchain Blockchain;
 
-    //TODO: Make repeat addresses prompt reenter
-    // Add wallets to network
     int numWallets;
     cout << "Enter the number of wallets: " << endl;
     while (true) {

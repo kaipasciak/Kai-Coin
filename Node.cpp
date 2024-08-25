@@ -44,7 +44,6 @@ int Node::getNonce(){
 }
 
 bool Node::mineBlock(int difficulty){
-    cout << "Mining block. Difficulty: " << difficulty << endl;
 
     string blockString = currentBlock.toString();
 
