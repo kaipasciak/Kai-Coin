@@ -1,14 +1,19 @@
+// Primary project
+
 #include "Blockchain.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
+
 int main() {
     // Initialize blockchain object
     Blockchain Blockchain;
 
+    // Add wallets to network
     int numWallets;
     cout << "Enter the number of wallets: " << endl;
+
     while (true) {
         cin >> numWallets;
         // Validate input
@@ -75,6 +80,7 @@ int main() {
             cout << "Create address for node " << i << ": " << endl;
             cin >> address;
             unused = false;
+            
             for (Node *node : Blockchain.nodes){
                 string nAddress = node->getAddress();
                 if (address == nAddress){
@@ -135,10 +141,10 @@ int main() {
         int round = 0;
         while (true) {
             round++;
-            cout << "Round: " << round << endl;
-            if (Blockchain.runNodes())
+            if (Blockchain.runNodes()) {
+                cout << "Round: " << round << endl;
                 break;
-
+            }
         }
 
         cout << "Wallet balances: " << endl;

@@ -25,6 +25,7 @@ void Blockchain::addBlock(){
     chain.push_back(nextBlock);
 }
 
+// TODO: implement
 int Blockchain::getLength(){
     return chain.size();
 }
@@ -34,7 +35,7 @@ Block Blockchain::getLastBlock(){
 }
 
 void Blockchain::setNextBlock(){
-
+/*
     vector<Transaction> newBlockTransactions = {};
     for (int i = 0; i < NUM_BLOCK_TRANSACTIONS; i++) {
         if (mempool.size() != 0) {
@@ -45,6 +46,18 @@ void Blockchain::setNextBlock(){
     string lastBlockHash = getLastBlock().getPreviousHash();
     Block newBlock = Block(lastBlockHash, newBlockTransactions);
     nextBlock = newBlock;
+    */
+
+    if (mempool.size() >= 3) {
+        vector<Transaction> newBlockTransactions = {};
+        for (int i = 0; i < NUM_BLOCK_TRANSACTIONS; i++) {
+            newBlockTransactions.push_back(mempool.front());
+            mempool.erase(mempool.begin());
+        }
+        string lastBlockHash = getLastBlock().getPreviousHash();
+        Block newBlock = Block(lastBlockHash, newBlockTransactions);
+        nextBlock = newBlock;
+    }
 
 }
 
@@ -89,12 +102,14 @@ bool Blockchain::runNodes(){
                 }
             }
 
+            // update difficulty at the end of this
+            int oldDifficulty = difficulty;
+            // TODO: functionality for changing difficulty
+            // difficulty = nodes.size();
+            cout << "difficulty updated from " << oldDifficulty << " to " << difficulty << endl;
             addBlock();
             return true;
         }
     }
     return false;
-
-
-    // update difficulty at the end of this
 }
