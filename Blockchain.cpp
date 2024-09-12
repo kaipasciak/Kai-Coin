@@ -36,18 +36,6 @@ Block Blockchain::getLastBlock(){
 
 void Blockchain::setNextBlock(){
 /*
-    vector<Transaction> newBlockTransactions = {};
-    for (int i = 0; i < NUM_BLOCK_TRANSACTIONS; i++) {
-        if (mempool.size() != 0) {
-            newBlockTransactions.push_back(mempool.front());
-            mempool.erase(mempool.begin());
-        }
-    }
-    string lastBlockHash = getLastBlock().getPreviousHash();
-    Block newBlock = Block(lastBlockHash, newBlockTransactions);
-    nextBlock = newBlock;
-    */
-
     if (mempool.size() >= 3) {
         vector<Transaction> newBlockTransactions = {};
         for (int i = 0; i < NUM_BLOCK_TRANSACTIONS; i++) {
@@ -58,6 +46,23 @@ void Blockchain::setNextBlock(){
         Block newBlock = Block(lastBlockHash, newBlockTransactions);
         nextBlock = newBlock;
     }
+    */
+
+    vector<Transaction> newBlockTransactions;
+    int numTransactions = min(NUM_BLOCK_TRANSACTIONS, static_cast<int>(mempool.size()));
+
+    // Transactions to be added to the next block
+    for (int i = 0; i < numTransactions; ++i) {
+        newBlockTransactions.push_back(mempool.front());
+        mempool.erase(mempool.begin());
+    }
+
+    if (!newBlockTransactions.empty()) {
+        string lastBlockHash = getLastBlock().getPreviousHash();
+        Block newBlock(lastBlockHash, newBlockTransactions);
+        nextBlock = newBlock;
+    }
+
 
 }
 
@@ -85,7 +90,7 @@ bool Blockchain::runNodes(){
                 string recipient = transaction.getRecipient();
                 string sender = transaction.getSender();
 
-                bool valid;
+                bool valid = false;
                 for (Wallet& wallet : wallets){
                     if (wallet.getAddress() == sender){
                         if (wallet.getBalance() >= change){
